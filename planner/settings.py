@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'crispy_forms',
     'rest_framework',
+    'schedule',
+    'djangobower',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,3 +133,16 @@ LOGIN_REDIRECT_URL = 'index'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+# schedule
+TEMPLATE_CONTEXT_PROCESSORS = "django.template.context_processors.request"
+
+# STATICFILES_FINDERS = 'djangobower.finders.BowerFinder'
+
+# BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
+
+# BOWER_INSTALLED_APPS = (
+#     'jquery',
+#     'jquery-ui',
+#     'bootstrap'
+# )
