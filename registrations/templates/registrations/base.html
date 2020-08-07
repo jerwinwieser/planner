@@ -11,6 +11,7 @@
 		<nav class="my-2 my-md-0 mr-md-3">
 			<a class="p-2 text-dark" href="{% url 'index' %}">Index</a>
 			<a class="p-2 text-dark" href="{% url 'submit' %}">Submit</a>
+			<a class="p-2 text-dark" href="{% url 'check' %}">Check</a>
 			<a class="p-2 text-dark" href="{% url 'admin:index' %}">Admin</a>
 
 			{% if request.user.is_authenticated %}

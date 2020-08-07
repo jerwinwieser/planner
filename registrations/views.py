@@ -12,3 +12,6 @@ def index(request):
 def submit(request):
 	sampletext = 'submit'
 	return render(request, 'registrations/submit.html', {'sampletext': sampletext})
+
+def check(request):
+	return render(request, 'registrations/check.html')
