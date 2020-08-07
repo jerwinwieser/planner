@@ -1,7 +1,21 @@
-{% extends 'registrations/base.html' %}
+{% extends 'registrations/base_section.html' %}
 
 {% block title %}registrations - index{% endblock %}
 
 {% block content %}
 <h1>this is the index page</h1>
+
+<ul>
+{% for name in names %}
+<li>{{ name|title }}</li>
+{% endfor %}
+</ul>
+
+<ul>
+{% for user in users %}
+<li>{{ user }}</li>
+{% endfor %}
+{# comment text .. #}
+</ul>
+
 {% endblock %}
