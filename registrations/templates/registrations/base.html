@@ -5,9 +5,19 @@
 	
 	<title>{% block title %}{% endblock %}</title>
 
+	{% include 'registrations/bootstrap.html' %}
+
 </head>
 
 <body>
+
+	{% if messages %}
+	{% for message in messages %}
+	<div class="alert alert-{{ message.tags }}">
+		{{ message }}
+	</div>
+	{% endfor %}
+	{% endif %}
 
 	<ul>
 		<li> <a href="{% url 'index' %}">Index</a></li>
@@ -22,6 +32,14 @@
 	</ul>
 
 	{% block content %}{% endblock %}
+
+	{% include 'registrations/js.html' %}
+
+	<script>
+		$(document).ready(function(){
+			{% block jquery %}{% endblock jquery %}
+		})
+	</script>
 
 </body>
 

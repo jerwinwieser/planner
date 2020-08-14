@@ -54,8 +54,9 @@ class data_rest(APIView):
 		}
 		return Response(data)
 
-# def render_chart(request, *args, **kwargs):
-# 	return render(request, 'registrations/chart.html')
+def render_chart(request, *args, **kwargs):
+	return render(request, 'registrations/chart.html')
+
 
 # class rest_data(APIView):
 # 	authentication_classes = []
