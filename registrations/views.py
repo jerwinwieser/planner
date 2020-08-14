@@ -1,42 +1,34 @@
-from django.shortcuts import render, redirect
-	
+from django.shortcuts import render, redirect	
 from django.http import HttpResponse, Http404
-
-# load some libraries to set permissions
 from django.contrib.auth.decorators import login_required, permission_required
-
 from django.contrib.auth.models import User
-
 import datetime
 
-def index(request):
-	sampletext = 'index'
-	names = ["harry", "hans", "fred"]
-	users = User.objects.all()
-	users_list = User.objects.values()
-
-	# context = {'sampletext': sampletext, 'names': names, 'users': users}
-	return render(request, 'registrations/index.html', locals())
+from .models import Person
 
 @login_required(login_url='login')
-def submit(request):
-	sampletext = 'submit'
-	return render(request, 'registrations/submit.html', {'sampletext': sampletext})
+def index(request):
+	current_datetime = datetime.datetime.now()
 
-def check(request):
-	text = 'checkin ..'
-	return render(request, 'registrations/check.html', locals())
+	# users = User.objects.all()
+	# users_list = User.objects.values()
 
-def current_datetime(request):
-	now = datetime.datetime.now()
-	return render(request, 'registrations/current_datetime.html', {'current_date': now})
+	# persons = Person.objects.all()
+	# persons_list = Person.objects.values()
 
-def render_404(request):
-    try:
-        obj = MyModel.objects.get(pk=1)
-    except MyModel.DoesNotExist:
-        raise Http404("No MyModel matches the given query.")
+	users = []
+	persons = []
 
-def redir(request):
-    # return redirect('https://google.com/')
-    return redirect('index')
+	return render(request, 'registrations/index.html', locals())
+
+def create_person(request):
+	# r = Person(first_name='John', last_name='Doe')
+	# r.save()
+	users = []
+	persons = []
+	if 'list' in request.POST:
+		users = User.objects.all()
+	elif 'do-something-else' in request.POST:
+		persons = Person.objects.all()
+
+	return render(request, 'registrations/index.html', locals())

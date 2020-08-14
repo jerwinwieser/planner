@@ -11,8 +11,6 @@
 
 	<ul>
 		<li> <a href="{% url 'index' %}">Index</a></li>
-		<li> <a href="{% url 'submit' %}">Submit</a></li>
-		<li> <a href="{% url 'check' %}">Check</a></li>
 		<li> <a href="{% url 'admin:index' %}">Admin</a></li>
 
 		{% if request.user.is_authenticated %}
