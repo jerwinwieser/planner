@@ -9,31 +9,36 @@
 
 <h2>Users:</h2>
 <ul>
-{% for user in users %}
-<li>{{ user|title }}</li>
-{% endfor %}
-{# comment text .. #}
+	{% for user in users %}
+	<li>{{ user|title }}</li>
+	{% endfor %}
+	{# comment text .. #}
 </ul>
 
 <h2>Persons:</h2>
 <ul>
-{% for person in persons %}
-<li>{{ person.last_name }}, {{ person.first_name }}</li>
-{% endfor %}
+	{% for person in persons %}
+	<li>{{ person.last_name }}, {{ person.first_name }}</li>
+	{% endfor %}
 </ul>
 
-<!-- <form>
-	<input type="submit" name="list" value="List Objects" />
+<h2>Forms:</h2>
+<form action="." method="post" enctype="application/x-www-form-urlencoded">
+	{% csrf_token %}
+	<ul>
+		<li>
+			{{ form.first_name.label_tag }}
+			{{ form.first_name }}
+			{{ form.first_name.errors }}
+		</li><li>
+			{{ form.last_name.label_tag }}
+			{{ form.last_name }}
+			{{ form.last_name.errors }}
+		</li>
+	</ul>
+	<button type="submit">Submit</button>
 </form>
-<form>
-	<input type="submit" name="do-something-else" value="Do Something Else" />
-</form> -->
 
-<form action="/your-name/" method="post">
-    <label for="your_name">Your name: </label>
-    <input id="your_name" type="text" name="your_name" value="{{ current_name }}">
-    <input type="submit" value="OK">
-</form>
 
 {% endblock %}
 
