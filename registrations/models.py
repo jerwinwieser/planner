@@ -1,6 +1,17 @@
 from django.db import models
 
+import datetime
+
+
+
 
 class Person(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
+	TIME_CHOICES = (
+	    ("SHORT", "Short"),
+	    ("LONG", "Long"),
+	)
+	current_datetime = models.DateTimeField(default=datetime.datetime.now(), blank=True)
+	first_name = models.CharField(max_length=30)
+	last_name = models.CharField(max_length=30)
+	age = models.IntegerField(blank=True, null=True)
+	time_interaction = models.CharField(max_length=30, choices=TIME_CHOICES, default="LONG")

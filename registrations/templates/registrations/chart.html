@@ -1,0 +1,34 @@
+{% extends 'registrations/base_section.html' %}
+
+{% block title %}registrations - chart{% endblock %}
+
+<script>
+    {% block jquery %}
+
+    var endpoint = '/rest/'
+    var x = []
+    var y = []
+
+    $.ajax({
+       method: "GET",
+       url: endpoint,
+
+       success: function(data){
+        x = data.x
+        y = data.y
+        create_chart_line()
+    },
+    error: function(error_data){
+        console.log("error")
+        console.log(error_data)
+    }
+})
+
+    {% include 'registrations/create_chart_line.js' %}
+
+    {% endblock jquery %}
+</script>
+
+{% block content %}
+<canvas id="my_chart" width="400" height="400"></canvas>
+{% endblock content %}

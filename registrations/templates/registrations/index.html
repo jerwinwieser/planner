@@ -1,9 +1,6 @@
- 
 {% extends 'registrations/base_section.html' %}
 
 {% block title %}registrations - index{% endblock %}
-
-
 
 {% block content %}
 
@@ -18,7 +15,7 @@
 <h2>Persons:</h2>
 <ul>
 	{% for person in persons %}
-	<li>{{ person.last_name }}, {{ person.first_name }}</li>
+	<li>{{ person.last_name }}, {{ person.first_name }} - {{ person.current_datetime }}</li>
 	{% endfor %}
 </ul>
 
@@ -34,11 +31,15 @@
 			{{ form.last_name.label_tag }}
 			{{ form.last_name }}
 			{{ form.last_name.errors }}
+		</li><li>
+			{{ form.age.label_tag }}
+			{{ form.age }}
+			{{ form.age.errors }}
 		</li>
 	</ul>
+
 	<button type="submit">Submit</button>
+
 </form>
 
-
 {% endblock %}
-
