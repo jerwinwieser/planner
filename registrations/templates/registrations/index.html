@@ -18,30 +18,10 @@
 <h2>Persons:</h2>
 <ul>
 	{% for person in persons %}
-	<li>{{ person.last_name }}, {{ person.first_name }} - {{ person.current_datetime }}</li>
+	<li>{{ person.last_name }}, {{ person.first_name }}</li>
 	{% endfor %}
 </ul>
 
-<h2>Forms:</h2>
-<form action="." method="post" enctype="application/x-www-form-urlencoded">
-	{% csrf_token %}
-	<ul>
-		<li>
-			{{ form.first_name.label_tag }}
-			{{ form.first_name }}
-			{{ form.first_name.errors }}
-		</li><li>
-			{{ form.last_name.label_tag }}
-			{{ form.last_name }}
-			{{ form.last_name.errors }}
-		</li><li>
-			{{ form.age.label_tag }}
-			{{ form.age }}
-			{{ form.age.errors }}
-		</li>
-	</ul>
-	<button type="submit">Submit</button>
-</form>
 
 {% endblock %}
 

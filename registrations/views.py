@@ -13,34 +13,38 @@ import os
 
 from datetime import datetime, date
 
-from .models import Person, Snippet
-from .forms import NameForm, ContactForm, SnippetForm
-
-def contact(request):
-
-	if request.method == 'POST':
-		form = ContactForm(request.POST)
-		if form.is_valid():
-
-			name = form.cleaned_data['name']
-			email = form.cleaned_data['email']
-
-			print(name, email)
+from .models import Person
+from .forms import PersonForm
 
 
-	form = ContactForm()
-	return render(request, 'registrations/form.html', {'form': form})
-
-
-def snippet(request):
+def render_form(request):
 
 	if request.method == 'POST':
-		form = SnippetForm(request.POST)
+		form = PersonForm(request.POST)
 		if form.is_valid():
 			form.save()
 
-	form = SnippetForm()
-	return render(request, 'registrations/snippet.html', {'form': form})
+	form = PersonForm()
+	return render(request, 'registrations/form.html', {'form': form})
+
+	
+
+# def contact(request):
+
+# 	if request.method == 'POST':
+# 		form = ContactForm(request.POST)
+# 		if form.is_valid():
+
+# 			name = form.cleaned_data['name']
+# 			email = form.cleaned_data['email']
+
+# 			print(name, email)
+
+
+# 	form = ContactForm()
+# 	return render(request, 'registrations/form.html', {'form': form})
+
+
 
 
 
@@ -50,7 +54,7 @@ def index(request):
 	current_datetime = datetime.now()
 	users = User.objects.all()
 	persons = Person.objects.all()
-	form = NameForm(request.POST or None)
+	form = PersonForm(request.POST or None)
 
 	if request.method == 'POST':
 		if form.is_valid():

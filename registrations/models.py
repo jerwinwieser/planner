@@ -1,23 +1,20 @@
 from django.db import models
 
-import datetime
+from datetime import datetime
 
-
-class Snippet(models.Model):
-	name = models.CharField(max_length=100)
-	body = models.TextField()
-
-	def __str__(self):
-		return self.name
+TITLE_CHOICES = [
+    ('MR', 'Mr.'),
+    ('MRS', 'Mrs.'),
+    ('MS', 'Ms.'),
+]
 
 
 class Person(models.Model):
-	TIME_CHOICES = (
-	    ("SHORT", "Short"),
-	    ("LONG", "Long"),
-	)
-	current_datetime = models.DateTimeField(default=datetime.datetime.now(), blank=True)
+
 	first_name = models.CharField(max_length=30)
 	last_name = models.CharField(max_length=30)
-	age = models.IntegerField(blank=True, null=True)
-	time_interaction = models.CharField(max_length=30, choices=TIME_CHOICES, default="LONG")
+	title = models.CharField(max_length=3, choices=TITLE_CHOICES, default='NA')
+
+
+	def __str__(self):
+		return self.first_name
