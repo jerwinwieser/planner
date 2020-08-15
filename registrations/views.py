@@ -13,8 +13,35 @@ import os
 
 from datetime import datetime, date
 
-from .models import Person
-from .forms import NameForm
+from .models import Person, Snippet
+from .forms import NameForm, ContactForm, SnippetForm
+
+def contact(request):
+
+	if request.method == 'POST':
+		form = ContactForm(request.POST)
+		if form.is_valid():
+
+			name = form.cleaned_data['name']
+			email = form.cleaned_data['email']
+
+			print(name, email)
+
+
+	form = ContactForm()
+	return render(request, 'registrations/form.html', {'form': form})
+
+
+def snippet(request):
+
+	if request.method == 'POST':
+		form = SnippetForm(request.POST)
+		if form.is_valid():
+			form.save()
+
+	form = SnippetForm()
+	return render(request, 'registrations/snippet.html', {'form': form})
+
 
 
 @login_required(login_url='login')
@@ -62,18 +89,3 @@ class data_rest(APIView):
 def render_chart(request, *args, **kwargs):
 	return render(request, 'registrations/chart.html')
 
-
-# class rest_data(APIView):
-# 	authentication_classes = []
-# 	permission_classes = []
-
-# 	def get(self, request, format=None):
-
-# 		colors = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
-# 		values: [12, 19, 3, 5, 2, 3]
-
-# 		data = {
-# 				'x': colors,
-# 				'y': values,
-# 		}
-# 		return Response(data)
