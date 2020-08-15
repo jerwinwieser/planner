@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>form</title>
-</head>
-<body>
+{% extends 'registrations/base_section.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}registrations - form{% endblock %}
+
+{% block content %}
 
 <form method="post">
-{% csrf_token %}
-{{ form }}
-<button type="submit">Submit</button>
+	{% csrf_token %}
+	{{ form|crispy }}
+	<button type="submit">Submit</button>
 </form>
 
-</body>
-</html>
+{% endblock %}

@@ -12,7 +12,7 @@
        success: function(data){
         x = data.x
         y = data.y
-        create_chart_line()
+        create_chart_bar()
         },
         error: function(error_data){
             console.log("error")
@@ -20,7 +20,7 @@
         }
     })
 
-    {% include 'registrations/create_chart_line.js' %}
+    {% include 'registrations/create_chart_bar.js' %}
 
     {% endblock %}
 </script>

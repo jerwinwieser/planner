@@ -20,8 +20,8 @@
 
 	<ul>
 		<li> <a href="{% url 'index' %}">Index</a></li>
-		<li> <a href="{% url 'form' %}">form</a></li>
 		<li> <a href="{% url 'chart' %}">Chart</a></li>
+		<li> <a href="{% url 'form' %}">Form</a></li>
 		<li> <a href="{% url 'admin:index' %}">Admin</a></li>
 
 		{% if request.user.is_authenticated %}

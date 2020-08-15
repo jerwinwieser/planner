@@ -17,6 +17,30 @@ from .models import Person
 from .forms import PersonForm
 
 
+	
+@login_required(login_url='login')
+def index(request):
+	current_user = request.user
+	users = User.objects.all()
+	persons = Person.objects.all()
+
+	if request.method == 'POST':
+		form = PersonForm(request.POST)
+		if form.is_valid():
+			"""
+				first_name = form.cleaned_data['first_name']
+				last_name = form.cleaned_data['last_name']
+				r = Person(first_name=first_name, last_name=last_name)
+				r.save()
+			"""
+			form.save()
+
+	form = PersonForm()
+	
+
+	return render(request, 'registrations/index.html', locals())
+
+
 def render_form(request):
 
 	if request.method == 'POST':
@@ -27,59 +51,18 @@ def render_form(request):
 	form = PersonForm()
 	return render(request, 'registrations/form.html', {'form': form})
 
-	
-
-# def contact(request):
-
-# 	if request.method == 'POST':
-# 		form = ContactForm(request.POST)
-# 		if form.is_valid():
-
-# 			name = form.cleaned_data['name']
-# 			email = form.cleaned_data['email']
-
-# 			print(name, email)
-
-
-# 	form = ContactForm()
-# 	return render(request, 'registrations/form.html', {'form': form})
-
-
-
-
-
-@login_required(login_url='login')
-def index(request):
-	current_user = request.user
-	current_datetime = datetime.now()
-	users = User.objects.all()
-	persons = Person.objects.all()
-	form = PersonForm(request.POST or None)
-
-	if request.method == 'POST':
-		if form.is_valid():
-			current_datetime = datetime.now()
-			first_name = form.cleaned_data['first_name']
-			last_name = form.cleaned_data['last_name']
-			age = form.cleaned_data['age']
-			r = Person(first_name=first_name, last_name=last_name, age=age, current_datetime=current_datetime)
-			r.save()
-
-	return render(request, 'registrations/index.html', locals())
 
 class data_rest(APIView):
 	authentication_classes = []
 	permission_classes = []
 	def get(self, request, format=None):
-		# queryset = Person.objects.values_list('first_name')
 
-		# df = pd.DataFrame.from_records()
-
-		df = pd.DataFrame(list(Person.objects.all().values('first_name', 'last_name', 'current_datetime')))
+		df = pd.DataFrame(list(Person.objects.all().values('first_name', 'duration')))
+				
+		df_grp = df.groupby('duration').count()
 		
-		df['current_date'] = [x.date() for x in df.current_datetime]
+		print(df_grp)
 
-		df_grp = df.groupby('current_date').count()
 
 		x = df_grp.index.values
 		y = df_grp.first_name.values
