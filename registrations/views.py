@@ -47,10 +47,10 @@ class data_rest(APIView):
 	permission_classes = []
 	def get(self, request, format=None):
 		labels = ["Users", "Blue", "Yellow"]
-		default_items = [5, 7, 9]
+		default = [5, 7, 9]
 		data = {
 				'labels': labels,
-				'default': default_items,
+				'default': default,
 		}
 		return Response(data)
 
