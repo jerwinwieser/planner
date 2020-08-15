@@ -4,15 +4,15 @@
 <script>
     {% block jquery %}
     var endpoint = '/data/rest/'
-    var defaultdata = []
-    var labels = []
+    var x = []
+    var y = []
     $.ajax({
        method: "GET",
        url: endpoint,
        success: function(data){
-        labels = data.labels
-        defaultdata = data.default
-        create_chart_bar()
+        x = data.x
+        y = data.y
+        create_chart_line()
         },
         error: function(error_data){
             console.log("error")
@@ -20,7 +20,7 @@
         }
     })
 
-    {% include 'registrations/create_chart_bar.js' %}
+    {% include 'registrations/create_chart_line.js' %}
 
     {% endblock %}
 </script>

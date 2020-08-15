@@ -11,7 +11,7 @@ import pandas as pd
 import numpy as np
 import os
 
-import datetime
+from datetime import datetime, date
 
 from .models import Person
 from .forms import NameForm
@@ -19,14 +19,14 @@ from .forms import NameForm
 
 @login_required(login_url='login')
 def index(request):
-	current_datetime = datetime.datetime.now()
+	current_datetime = datetime.now()
 	users = User.objects.all()
 	persons = Person.objects.all()
 	form = NameForm(request.POST or None)
 
 	if request.method == 'POST':
 		if form.is_valid():
-			current_datetime = datetime.datetime.now()
+			current_datetime = datetime.now()
 			first_name = form.cleaned_data['first_name']
 			last_name = form.cleaned_data['last_name']
 			age = form.cleaned_data['age']
@@ -35,22 +35,26 @@ def index(request):
 
 	return render(request, 'registrations/index.html', locals())
 
-def data_json(request, *args, **kwargs):
-	data = {
-		'sales': 100,
-		'customers': 10,
-	}
-	return JsonResponse(data)
-
 class data_rest(APIView):
 	authentication_classes = []
 	permission_classes = []
 	def get(self, request, format=None):
-		labels = ["Users", "Blue", "Yellow"]
-		default = [5, 7, 9]
+		# queryset = Person.objects.values_list('first_name')
+
+		# df = pd.DataFrame.from_records()
+
+		df = pd.DataFrame(list(Person.objects.all().values('first_name', 'last_name', 'current_datetime')))
+		
+		df['current_date'] = [x.date() for x in df.current_datetime]
+
+		df_grp = df.groupby('current_date').count()
+
+		x = df_grp.index.values
+		y = df_grp.first_name.values
+
 		data = {
-				'labels': labels,
-				'default': default,
+				'x': x,
+				'y': y,
 		}
 		return Response(data)
 
