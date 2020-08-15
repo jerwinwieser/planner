@@ -19,6 +19,7 @@ from .forms import NameForm
 
 @login_required(login_url='login')
 def index(request):
+	current_user = request.user
 	current_datetime = datetime.now()
 	users = User.objects.all()
 	persons = Person.objects.all()
