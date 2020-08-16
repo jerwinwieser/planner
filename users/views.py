@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from django.contrib import messages
 
-from .forms import UserRegisterForm, UserUpdateform, ProfileUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm
 
 from django.contrib.auth.decorators import login_required, permission_required
 
@@ -23,32 +23,12 @@ def register(request):
 
 @login_required(login_url='login')
 def profile(request):
-	u_form = UserUpdateform()
-	p_form = ProfileUpdateForm()
-
-	context = {
-		'u_form': u_form,
-		'p_form': p_form
-	}
-	return render(request, 'users/profile.html', context)
-
-@login_required(login_url='login')
-def get_user_profile(request):
-    user = request.user
-    return render(request, 'users/user_profile.html', {'user': user})
-
-def update_profile(request):
-	args = {}
-
-	form = UpdateProfile(request.POST, instance=request.user)
-
 	if request.method == 'POST':
-		form = UpdateProfile(request.POST, instance=request.user)
-		form.actual_user = request.user
-		if form.is_valid():
-			form.save()
-			return HttpResponseRedirect(reverse('update_profile_success'))
+		profile_form = UserUpdateForm(request.POST, instance=request.user)
+		if profile_form.is_valid():
+			profile_form.save()
+			messages.success(request, f'Your account has been updated!')
+			return redirect('profile')
 	else:
-		form = UpdateProfile()
-
-	return render(request, 'registration/update_profile.html', locals())
+		profile_form = UserUpdateForm(instance=request.user)
+	return render(request, 'users/profile.html', {'profile_form': profile_form})

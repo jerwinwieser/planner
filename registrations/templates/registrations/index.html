@@ -20,7 +20,21 @@
 <h2>Persons:</h2>
 <ul>
 	{% for person in persons %}
-	<li>{{ person.last_name }}, {{ person.first_name }} ({{ person.created_by }})</li>
+	<li>{{ person.name }} | {{ person.duration }} ({{ person.created_by }})</li>
+	{% endfor %}
+</ul>
+
+<h2>Persons Delete:</h2>
+<ul>
+	{% for person in persons %}
+	<li>{{ person.name }} | <a href="{% url 'delete' person.id %}">Delete</a></li>
+	{% endfor %}
+</ul>
+
+<h2>Persons Edit:</h2>
+<ul>
+	{% for person in persons %}
+	<li>{{ person.name }} | <a href="{% url 'edit' person.id %}">Edit</a></li>
 	{% endfor %}
 </ul>
 

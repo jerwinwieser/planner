@@ -10,7 +10,7 @@
 <h2>Persons:</h2>
 <ul>
 	{% for person in persons %}
-	<li>{{ person.last_name }}, {{ person.first_name }}</li>
+	<li>{{ person.name }} | {{ person.duration }} ({{ current_user }})</li>
 	{% endfor %}
 </ul>
 

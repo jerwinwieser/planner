@@ -16,7 +16,41 @@ from datetime import datetime, date
 from .models import Person
 from .forms import PersonForm
 
+def delete(request, person_id):
+	person = Person.objects.get(pk=person_id)
+	person.delete()
+	messages.success(request, ('Person been been deleted!'))
+	return redirect('index')
 
+def edit(request, person_id):
+	current_user = request.user
+	if request.method == 'POST':
+		person = Person.objects.get(pk=person_id)
+		form = PersonForm(request.POST or None, instance=person)
+
+		if form.is_valid():
+			form.save(user=current_user)
+			messages.success(request, ('Person has been edited!'))
+			return redirect('index')
+
+	else:
+		person = Person.objects.get(pk=person_id)
+		form = PersonForm(instance=person)
+		return render(request, 'registrations/edit.html', {'form': form})
+
+# def edit(request, person_id):
+# 	if request.method == 'POST':
+# 		person = Person.objects.get(pk=person_id)
+# 		form = PersonForm(request.POST or None, instance=person)
+
+# 		if form.is_valid():
+# 			form.save()
+# 			messages.success(request, ('Person has been edited!'))
+# 			return redirect('index')
+
+# 	else:
+# 		person = Person.objects.get(pk=person_id)
+# 		return render(request, 'registrations/edit.html', {'person': person})
 	
 @login_required(login_url='login')
 def index(request):
@@ -29,13 +63,6 @@ def index(request):
 def user_gains_perms(request):
 	current_user = request.user
 	persons = Person.objects.filter(created_by_id=current_user)
-	df = pd.DataFrame(list(persons.values(
-		'first_name', 
-		'created_at',
-		'updated_at',
-		'created_by_id',
-		)))
-	print(df)
 	return render(request, 'registrations/user.html', locals())
 
 @login_required(login_url='login')
@@ -58,17 +85,15 @@ class data_rest(APIView):
 
 		persons = Person.objects.all()
 
-		df = pd.DataFrame(list(persons.values(
-			'first_name', 
-			'created_at',
-			'updated_at',
-			'created_by_id',
-			)))
-		print(df)
-		
+		# df = pd.DataFrame(list(persons.values(
+		# 	'name', 
+		# 	'created_at',
+		# 	'updated_at',
+		# 	'created_by_id',
+		# 	)))		
 		# df_grp = df.groupby('duration').count()
 		# x = df_grp.index.values
-		# y = df_grp.first_name.values
+		# y = df_grp.name.values
 
 		x = []
 		y = []
