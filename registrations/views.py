@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect	
 from django.http import HttpResponse, Http404
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
 from django.http import JsonResponse
@@ -36,9 +36,12 @@ def index(request):
 			form.save()
 
 	form = PersonForm()
-	
-
 	return render(request, 'registrations/index.html', locals())
+
+def user_gains_perms(request):
+	current_user = request.user
+	persons = Person.objects.all()
+	return render(request, 'registrations/user.html', locals())
 
 
 def render_form(request):

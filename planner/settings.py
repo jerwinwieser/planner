@@ -44,6 +44,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+MIDDLEWARE_CLASSES = []
+
+MIDDLEWARE_CLASSES += ('crum.CurrentRequestUserMiddleware',)
+
+
 ROOT_URLCONF = 'planner.urls'
 
 TEMPLATES = [
