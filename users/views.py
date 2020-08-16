@@ -1,14 +1,13 @@
 from django.shortcuts import render, redirect
 
-# import library for flash messages 
-# (such as succesfull login occurs)
 from django.contrib import messages
 
-# import our custom registration form
-from . forms import UserRegisterForm
+from .forms import UserRegisterForm, UserUpdateform, ProfileUpdateForm
 
-# we'll use 3th party app 'crispy-forms'
-# to make the forms template nice
+from django.contrib.auth.decorators import login_required, permission_required
+
+from django.contrib.auth.models import User, Permission
+
 
 def register(request):
 	form = UserRegisterForm(request.POST)
@@ -20,3 +19,36 @@ def register(request):
 	else:
 		form = UserRegisterForm()
 		return render(request, 'users/register.html', {'form': form})
+
+
+@login_required(login_url='login')
+def profile(request):
+	u_form = UserUpdateform()
+	p_form = ProfileUpdateForm()
+
+	context = {
+		'u_form': u_form,
+		'p_form': p_form
+	}
+	return render(request, 'users/profile.html', context)
+
+@login_required(login_url='login')
+def get_user_profile(request):
+    user = request.user
+    return render(request, 'users/user_profile.html', {'user': user})
+
+def update_profile(request):
+	args = {}
+
+	form = UpdateProfile(request.POST, instance=request.user)
+
+	if request.method == 'POST':
+		form = UpdateProfile(request.POST, instance=request.user)
+		form.actual_user = request.user
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect(reverse('update_profile_success'))
+	else:
+		form = UpdateProfile()
+
+	return render(request, 'registration/update_profile.html', locals())

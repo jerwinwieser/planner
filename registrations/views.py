@@ -25,6 +25,7 @@ def index(request):
 	persons = Person.objects.all()
 	return render(request, 'registrations/index.html', locals())
 
+@login_required(login_url='login')
 def user_gains_perms(request):
 	current_user = request.user
 	persons = Person.objects.filter(created_by_id=current_user)
@@ -37,7 +38,7 @@ def user_gains_perms(request):
 	print(df)
 	return render(request, 'registrations/user.html', locals())
 
-
+@login_required(login_url='login')
 def render_form(request):
 	current_user = request.user
 	if request.method == 'POST':

@@ -1,0 +1,20 @@
+{% extends 'registrations/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}user - profile{% endblock %}
+
+{% block content %}
+
+{{ user.username }}
+{{ user.email }}
+{{ user.first_name }}
+{{ user.last_name }}
+
+<form method="post">
+	{% csrf_token %}
+	{{ form|crispy }}
+	<button type="submit">Update</button>
+</form>
+
+{% endblock %}
