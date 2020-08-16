@@ -6,14 +6,20 @@ from django import forms
 
 from .models import Person
 
+from django.contrib.auth.models import User
+
 
 
 class PersonForm(forms.ModelForm):
 
 
-  class Meta:
-    model = Person
-    fields = ('first_name', 'last_name', 'title', 'duration', 'pers_age', 'rating')
+	class Meta:
+		model = Person
+		fields = ('first_name', 'last_name', 'title', 'duration', 'pers_age', 'rating')
 
 
-
+	def save(self, user, commit=True):
+		obj = super(PersonForm, self).save(commit=False)
+		obj.created_by = user
+		obj.save()
+		return obj

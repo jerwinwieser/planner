@@ -23,33 +23,27 @@ def index(request):
 	current_user = request.user
 	users = User.objects.all()
 	persons = Person.objects.all()
-
-	if request.method == 'POST':
-		form = PersonForm(request.POST)
-		if form.is_valid():
-			"""
-				first_name = form.cleaned_data['first_name']
-				last_name = form.cleaned_data['last_name']
-				r = Person(first_name=first_name, last_name=last_name)
-				r.save()
-			"""
-			form.save()
-
-	form = PersonForm()
 	return render(request, 'registrations/index.html', locals())
 
 def user_gains_perms(request):
 	current_user = request.user
-	persons = Person.objects.all()
+	persons = Person.objects.filter(created_by_id=current_user)
+	df = pd.DataFrame(list(persons.values(
+		'first_name', 
+		'created_at',
+		'updated_at',
+		'created_by_id',
+		)))
+	print(df)
 	return render(request, 'registrations/user.html', locals())
 
 
 def render_form(request):
-
+	current_user = request.user
 	if request.method == 'POST':
 		form = PersonForm(request.POST)
 		if form.is_valid():
-			form.save()
+			form.save(user=current_user)
 
 	form = PersonForm()
 	return render(request, 'registrations/form.html', {'form': form})
@@ -59,16 +53,24 @@ class data_rest(APIView):
 	authentication_classes = []
 	permission_classes = []
 	def get(self, request, format=None):
+		current_user = request.user
 
-		df = pd.DataFrame(list(Person.objects.all().values('first_name', 'duration')))
-				
-		df_grp = df.groupby('duration').count()
+		persons = Person.objects.all()
+
+		df = pd.DataFrame(list(persons.values(
+			'first_name', 
+			'created_at',
+			'updated_at',
+			'created_by_id',
+			)))
+		print(df)
 		
-		print(df_grp)
+		# df_grp = df.groupby('duration').count()
+		# x = df_grp.index.values
+		# y = df_grp.first_name.values
 
-
-		x = df_grp.index.values
-		y = df_grp.first_name.values
+		x = []
+		y = []
 
 		data = {
 				'x': x,
@@ -78,4 +80,3 @@ class data_rest(APIView):
 
 def render_chart(request, *args, **kwargs):
 	return render(request, 'registrations/chart.html')
-
