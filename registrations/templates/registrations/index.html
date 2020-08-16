@@ -20,21 +20,14 @@
 <h2>Persons:</h2>
 <ul>
 	{% for person in persons %}
-	<li>{{ person.name }} | {{ person.duration }} ({{ person.created_by }})</li>
+	<li>{{ person.name }} | {{ person.duration }} | <a href="{% url 'edit' person.id %}">Edit</a> | <a href="{% url 'delete' person.id %}">Delete</a> - ({{ person.created_by }})</li>
 	{% endfor %}
 </ul>
 
-<h2>Persons Delete:</h2>
+<h2>Persons by User:</h2>
 <ul>
-	{% for person in persons %}
-	<li>{{ person.name }} | <a href="{% url 'delete' person.id %}">Delete</a></li>
-	{% endfor %}
-</ul>
-
-<h2>Persons Edit:</h2>
-<ul>
-	{% for person in persons %}
-	<li>{{ person.name }} | <a href="{% url 'edit' person.id %}">Edit</a></li>
+	{% for person_by_user in persons_by_user %}
+	<li>{{ person_by_user.name }} | {{ person_by_user.duration }} | <a href="{% url 'edit' person_by_user.id %}">Edit</a> | <a href="{% url 'delete' person_by_user.id %}">Delete</a> - ({{ person_by_user.created_by }})</li>
 	{% endfor %}
 </ul>
 
