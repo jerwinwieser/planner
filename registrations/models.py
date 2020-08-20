@@ -20,11 +20,7 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 
-DURATION_CHOICES = [
-    ('SHORT', 'Short'),
-    ('MEDIUM', 'Medium'),
-    ('LONG', 'Long'),
-]
+DURATION_CHOICES = [('SHORT', 'Short'), ('MEDIUM', 'Medium'), ('LONG', 'Long')]
 
 # PERS_AGE_CHOICES = [(i,i) for i in range(16, 46)]
 

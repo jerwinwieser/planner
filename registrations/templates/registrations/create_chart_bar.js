@@ -1,11 +1,11 @@
 function create_chart_bar(){
-    var ctx = document.getElementById('myChart');
+    var ctx = document.getElementById('chart_by_user');
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: x,
             datasets: [{
-                label: '# of Votes',
+                label: '# ...',
                 data: y,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -33,7 +33,9 @@ function create_chart_bar(){
                         beginAtZero: true
                     }
                 }]
-            }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
         }
     })
 }

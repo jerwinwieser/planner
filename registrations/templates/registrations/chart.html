@@ -3,7 +3,7 @@
 
 <script>
     {% block jquery %}
-    var endpoint = '/data/rest/'
+    var endpoint = '/rest/'
     var x = []
     var y = []
     $.ajax({
@@ -27,7 +27,9 @@
 
 {% block content %}
 
-<canvas id="myChart" width="400" height="400"></canvas>
+<div style="height: 300px">
+<canvas id="chart_by_user" width="400" height="400"></canvas>
+</div>
 
 {% endblock %}
 

@@ -5,34 +5,19 @@
 	
 	<title>{% block title %}{% endblock %}</title>
 
-<!-- 	{% include 'registrations/bootstrap.html' %} -->
 </head>
 
 <body>
 
 	{% if messages %}
-	{% for message in messages %}
-	<div class="alert alert-{{ message.tags }}">
-		{{ message }}
-	</div>
-	{% endfor %}
+		{% for message in messages %}
+			<div class="alert alert-{{ message.tags }}">
+				{{ message }}
+			</div>
+		{% endfor %}
 	{% endif %}
 
-	<ul>
-		<li> <a href="{% url 'data_rest' %}">Data</a></li>
-		<li> <a href="{% url 'index' %}">Index</a></li>
-		<li> <a href="{% url 'form' %}">Form</a></li>
-		<li> <a href="{% url 'chart' %}">Chart</a></li>
-		<li> <a href="{% url 'admin:index' %}">Admin</a></li>
-
-		{% if request.user.is_authenticated %}
-		<li> <a href="{% url 'profile' %}">Profile</a></li>
-		<li> <a href="{% url 'logout' %}">Logout</a></li>
-		{% else %}
-		<li> <a href="{% url 'login' %}">Login</a></li>
-		<li> <a href="{% url 'register' %}">Register</a></li>
-		{% endif %}
-	</ul>
+	{% include 'registrations/navigation.html' %}
 
 	{% block content %}{% endblock %}
 
