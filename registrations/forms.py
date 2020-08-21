@@ -15,7 +15,7 @@ class PersonForm(forms.ModelForm):
 
 	class Meta:
 		model = Person
-		fields = ('name', 'duration')
+		fields = ('name', 'nationality', 'person_age', 'duration' ,'interaction', 'interaction', 'looks', 'close', 'reply', 'lay', 'comments')
 
 
 	def save(self, user, commit=True):
