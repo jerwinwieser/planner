@@ -1,5 +1,5 @@
-function create_chart_bar(){
-    var ctx = document.getElementById('chart_by_user');
+function create_chart_bar(chart_name){
+    var ctx = document.getElementById(chart_name);
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
