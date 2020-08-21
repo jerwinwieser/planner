@@ -1,4 +1,4 @@
-function create_chart_bar(chart_name){
+function create_chart_bar(chart_name, x, y){
     var ctx = document.getElementById(chart_name);
     var myChart = new Chart(ctx, {
         type: 'bar',

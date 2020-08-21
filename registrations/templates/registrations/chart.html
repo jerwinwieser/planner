@@ -9,12 +9,12 @@
     
     var endpoint = '/rest/'
     $.ajax({
-         method: "GET",
-         url: endpoint,
-         success: function(data){
-            x = data.x
-            y = data.y
-            create_chart_bar("chart_by_user")
+        method: "GET",
+        url: endpoint,
+        success: function(data){
+            x = data.persons_by_user_names
+            y = data.persons_by_user_age
+            create_chart_bar("chart_by_user", x, y)
         },
         error: function(error_data){
             console.log("error")
@@ -24,18 +24,19 @@
 
     var endpoint = '/rest/'
     $.ajax({
-         method: "GET",
-         url: endpoint,
-         success: function(data){
-            x = data.x
-            y = data.y
-            create_chart_bar("chart_by_user2")
+        method: "GET",
+        url: endpoint,
+        success: function(data){
+            x = data.persons_total_names
+            y = data.persons_total_age
+            create_chart_bar("chart_total", x, y)
         },
         error: function(error_data){
             console.log("error")
             console.log(error_data)
         }
     })
+
 
     {% endblock jquery %}
 
@@ -49,7 +50,7 @@
 </div>
 
 <div style="height: 300px">
-    <canvas id="chart_by_user2" width="400" height="400"></canvas>
+    <canvas id="chart_total" width="400" height="400"></canvas>
 </div>
 
 {% endblock content %}

@@ -30,4 +30,49 @@
 	{% endfor persons_by_user %}
 </ul>
 
+<h2>Data Table:</h2>
+<table id="datatable_example">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Nationality</th>
+			<th>Age</th>
+			<th>Duration</th>
+			<th>Interaction</th>
+			<th>Looks</th>
+			<th>Close</th>
+			<th>Reply</th>
+			<th>Lay</th>
+			<th>Created at</th>
+			<th>Created by</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for person in persons %}
+		<tr>
+			<td>{{ person.name }}</td>
+			<td>{{ person.nationality }}</td>
+			<td>{{ person.person_age }}</td>
+			<td>{{ person.duration }}</td>
+			<td>{{ person.interaction }}</td>
+			<td>{{ person.looks }}</td>
+			<td>{{ person.close }}</td>
+			<td>{{ person.reply }}</td>
+			<td>{{ person.lay }}</td>
+			<td>{{ person.created_at }}</td>
+			<td>{{ person.created_by }}</td>
+		</tr>
+		{% endfor persons %}
+	</tbody>
+</table>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#datatable_example').DataTable();
+})
+</script>
+
 {% endblock content %}

@@ -6,6 +6,12 @@
 	
 	<title>{% block title %}{% endblock title %}</title>
 
+	<!-- {% include 'registrations/datatable.html' %} -->
+
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+
+
+
 </head>
 
 <body>
@@ -23,11 +29,15 @@
 	{% include 'registrations/js.html' %}
 
 
+
+
 	<script>
 		$(document).ready(function(){
 			{% block jquery %}{% endblock jquery %}
 		})
 	</script>
+
+
 
 </body>
 
