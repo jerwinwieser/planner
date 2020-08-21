@@ -2,7 +2,7 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %}users-register{% endblock %}
+{% block title %}users-register{% endblock title %}
 
 {% block content %}
 
@@ -20,4 +20,4 @@
 	Already Have An Account? <a class="ml-2" href="{% url 'login' %}">Sign In</a>
 </small>
 
-{% endblock %}
+{% endblock content %}

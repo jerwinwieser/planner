@@ -2,14 +2,9 @@
 
 {% load crispy_forms_tags %}
 
-{% block title %}user - profile{% endblock %}
+{% block title %}user - profile{% endblock title %}
 
 {% block content %}
-
-<!-- {{ user.username }}
-{{ user.email }}
-{{ user.first_name }}
-{{ user.last_name }} -->
 
 <form method="post" enctype="multipart/form-data">
 	{% csrf_token %}
@@ -17,4 +12,4 @@
 	<button type="submit">Update</button>
 </form>
 
-{% endblock %}
+{% endblock content %}

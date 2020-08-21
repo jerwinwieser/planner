@@ -2,17 +2,53 @@
 
 
 <script>
+
     {% block jquery %}
+    
     var endpoint = '/rest/'
-    var x = []
-    var y = []
     $.ajax({
-       method: "GET",
-       url: endpoint,
-       success: function(data){
-        x = data.x
-        y = data.y
-        create_chart_bar()
+         method: "GET",
+         url: endpoint,
+         success: function(data){
+            var ctx = document.getElementById('chart_by_user');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.x,
+                    datasets: [{
+                        label: '# ...',
+                        data: data.y,
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            })
         },
         error: function(error_data){
             console.log("error")
@@ -20,16 +56,73 @@
         }
     })
 
-    {% include 'registrations/create_chart_bar.js' %}
+    var endpoint = '/rest/'
+    $.ajax({
+         method: "GET",
+         url: endpoint,
+         success: function(data){
+            var ctx = document.getElementById('chart_by_user2');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.x,
+                    datasets: [{
+                        label: '# ...',
+                        data: data.y,
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            })
+        },
+        error: function(error_data){
+            console.log("error")
+            console.log(error_data)
+        }
+    })
 
-    {% endblock %}
+    /*{% include 'registrations/create_chart_bar.js' %}*/
+
+    {% endblock jquery %}
+
 </script>
+
 
 {% block content %}
 
 <div style="height: 300px">
-<canvas id="chart_by_user" width="400" height="400"></canvas>
+    <canvas id="chart_by_user" width="400" height="400"></canvas>
 </div>
 
-{% endblock %}
+<div style="height: 300px">
+    <canvas id="chart_by_user2" width="400" height="400"></canvas>
+</div>
+
+{% endblock content %}
 

@@ -1,27 +1,27 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <head>
 	
-	<title>{% block title %}{% endblock %}</title>
+	<title>{% block title %}{% endblock title %}</title>
 
 </head>
 
 <body>
 
-	{% if messages %}
-		{% for message in messages %}
-			<div class="alert alert-{{ message.tags }}">
-				{{ message }}
-			</div>
-		{% endfor %}
-	{% endif %}
+
+	{% include 'registrations/messages.html' %}
+
 
 	{% include 'registrations/navigation.html' %}
 
-	{% block content %}{% endblock %}
+
+	{% block content %}{% endblock content %}
+
 
 	{% include 'registrations/js.html' %}
+
 
 	<script>
 		$(document).ready(function(){
