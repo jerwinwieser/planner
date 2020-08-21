@@ -9,6 +9,7 @@
 <form method="post" enctype="multipart/form-data">
 	{% csrf_token %}
 	{{ profile_form|crispy }}
+	<a href="{% url 'password_change' %}">Change password</a>
 	<button type="submit">Update</button>
 </form>
 
