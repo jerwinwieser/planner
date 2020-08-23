@@ -20,71 +20,6 @@ from datetime import datetime, date
 import pandas
 
 
-@api_view(['GET'])
-def data_rest_api(request):
-	persons_by_user = Person.objects.filter(created_by_id=request.user)
-	persons_total = Person.objects.all()
-	serializer = PersonSerializer(persons_by_user, many=True)
-
-	persons_by_user_names = [item for item in persons_by_user.values_list('name', flat=True)]
-	persons_by_user_age = [item for item in persons_by_user.values_list('person_age', flat=True)]
-
-	persons_total_names = [item for item in persons_total.values_list('name', flat=True)]
-	persons_total_age = [item for item in persons_total.values_list('person_age', flat=True)]
-
-	persons_total_names = [item for item in persons_total.values_list('name', flat=True)]
-
-	data = {
-		'persons_by_user_names': persons_by_user_names,
-		'persons_by_user_age': persons_by_user_age,
-		'persons_total_names': persons_total_names,
-		'persons_total_age': persons_total_age,
-	}
-	return Response(data)
-
-@api_view(['GET'])
-def data_rest_api_serial(request):
-	persons_total = Person.objects.all()
-	serializer = PersonSerializer(persons_total, many=True)
-	return Response(serializer.data)
-
-def chart_render(request, *args, **kwargs):
-	return render(request, 'registrations/chart.html')
-
-
-@login_required(login_url='login')
-def form_delete(request, person_id):
-	current_user = request.user
-	if request.method == 'POST':
-		person = Person.objects.get(pk=person_id)
-		form = PersonForm(request.POST or None, instance=person)
-
-		person.delete()
-		messages.success(request, ('Person been been deleted!'))
-		return redirect('index')
-
-	else:
-		person = Person.objects.get(pk=person_id)
-		form = PersonForm(instance=person)
-		return render(request, 'registrations/form_delete.html', {'form': form})
-
-@login_required(login_url='login')
-def form_edit(request, person_id):
-	current_user = request.user
-	if request.method == 'POST':
-		person = Person.objects.get(pk=person_id)
-		form = PersonForm(request.POST or None, instance=person)
-
-		if form.is_valid():
-			form.save(user=current_user)
-			messages.success(request, ('Person has been edited!'))
-			return redirect('index')
-
-	else:
-		person = Person.objects.get(pk=person_id)
-		form = PersonForm(instance=person)
-		return render(request, 'registrations/form_edit.html', {'form': form})
-
 @login_required(login_url='login')
 def index(request):
 	current_user = request.user
@@ -94,26 +29,97 @@ def index(request):
 	return render(request, 'registrations/index.html', locals())
 
 @login_required(login_url='login')
-def form_render(request):
+def charts(request):
 	current_user = request.user
-	if request.method == 'POST':
-		form = PersonForm(request.POST)
-		if form.is_valid():
-			form.save(user=current_user)
+	users = User.objects.all()
+	persons = Person.objects.all()
+	persons_by_user = Person.objects.filter(created_by_id=current_user)
+	return render(request, 'registrations/charts.html', locals())
 
-	form = PersonForm()
-	return render(request, 'registrations/form.html', {'form': form})
+@login_required(login_url='login')
+def tables(request):
+	current_user = request.user
+	users = User.objects.all()
+	persons = Person.objects.all()
+	persons_by_user = Person.objects.filter(created_by_id=current_user)
+	return render(request, 'registrations/tables.html', locals())
+
+# @api_view(['GET'])
+# def data_rest_api(request):
+# 	persons_by_user = Person.objects.filter(created_by_id=request.user)
+# 	persons_total = Person.objects.all()
+# 	serializer = PersonSerializer(persons_by_user, many=True)
+
+# 	persons_by_user_names = [item for item in persons_by_user.values_list('name', flat=True)]
+# 	persons_by_user_age = [item for item in persons_by_user.values_list('person_age', flat=True)]
+
+# 	persons_total_names = [item for item in persons_total.values_list('name', flat=True)]
+# 	persons_total_age = [item for item in persons_total.values_list('person_age', flat=True)]
+
+# 	persons_total_names = [item for item in persons_total.values_list('name', flat=True)]
+
+# 	data = {
+# 		'persons_by_user_names': persons_by_user_names,
+# 		'persons_by_user_age': persons_by_user_age,
+# 		'persons_total_names': persons_total_names,
+# 		'persons_total_age': persons_total_age,
+# 	}
+# 	return Response(data)
+
+# @api_view(['GET'])
+# def data_rest_api_serial(request):
+# 	persons_total = Person.objects.all()
+# 	serializer = PersonSerializer(persons_total, many=True)
+# 	return Response(serializer.data)
+
+# def chart_render(request, *args, **kwargs):
+# 	return render(request, 'registrations/chart.html')
+
+
+# @login_required(login_url='login')
+# def form_delete(request, person_id):
+# 	current_user = request.user
+# 	if request.method == 'POST':
+# 		person = Person.objects.get(pk=person_id)
+# 		form = PersonForm(request.POST or None, instance=person)
+
+# 		person.delete()
+# 		messages.success(request, ('Person been been deleted!'))
+# 		return redirect('index')
+
+# 	else:
+# 		person = Person.objects.get(pk=person_id)
+# 		form = PersonForm(instance=person)
+# 		return render(request, 'registrations/form_delete.html', {'form': form})
+
+# @login_required(login_url='login')
+# def form_edit(request, person_id):
+# 	current_user = request.user
+# 	if request.method == 'POST':
+# 		person = Person.objects.get(pk=person_id)
+# 		form = PersonForm(request.POST or None, instance=person)
+
+# 		if form.is_valid():
+# 			form.save(user=current_user)
+# 			messages.success(request, ('Person has been edited!'))
+# 			return redirect('index')
+
+# 	else:
+# 		person = Person.objects.get(pk=person_id)
+# 		form = PersonForm(instance=person)
+# 		return render(request, 'registrations/form_edit.html', {'form': form})
+
+# @login_required(login_url='login')
+# def form_render(request):
+# 	current_user = request.user
+# 	if request.method == 'POST':
+# 		form = PersonForm(request.POST)
+# 		if form.is_valid():
+# 			form.save(user=current_user)
+
+# 	form = PersonForm()
+# 	return render(request, 'registrations/form.html', {'form': form})
 
 
 
-# from django.contrib.auth import update_session_auth_hash
-
-# def password_change(request):
-#     if request.method == 'POST':
-#         form = PasswordChangeForm(user=request.user, data=request.POST)
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user)
-#     else:
-#         print('ELSE..')
 

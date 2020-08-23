@@ -1,16 +1,9 @@
-{% extends 'base/base.html' %}
+{% extends 'registrations/base.html' %}
 
 {% block content %}
 
 <!-- Page Heading -->
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-	<h1 class="h4 mb-0 text-gray-800">Dashboard</h1>
-</div>
-
-<div class="row">
-	<p>here comes the content</p>
-</div>
-
+<h1 class="h3 mb-2 text-gray-800">Dashboard</h1>
+<p class="mb-4">{{ current_user }}</p>
 
 {% endblock content %}
-
