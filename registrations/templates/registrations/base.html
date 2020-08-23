@@ -1,40 +1,63 @@
 {% load static %}
 
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-	
-	<title>{% block title %}{% endblock title %}</title>
 
-	{% include 'registrations/datatable.html' %}
-
+{% include 'base/head.html' %}
 
 </head>
 
-<body>
+<body id="page-top">
 
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
-	{% include 'registrations/messages.html' %}
+		<!-- Sidebar -->
+		{% include 'base/sidebar.html' %}
+		<!-- End of Sidebar -->
 
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
 
-	{% include 'registrations/navigation.html' %}
+			<!-- Main Content -->
+			<div id="content">
 
+				<!-- Topbar -->
+				{% include 'base/topbar.html' %}
+				<!-- End of Topbar -->
 
-	{% block content %}{% endblock content %}
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
 
+					{% block content %}{% endblock content %}
 
-	{% include 'registrations/js.html' %}
+				</div>
+				<!-- /.container-fluid -->
 
+			</div>
+			<!-- End of Main Content -->
 
+			<!-- Footer -->
+			{% include 'base/footer.html' %}
+			<!-- End of Footer -->
 
+		</div>
+		<!-- End of Content Wrapper -->
 
-	<script>
-		$(document).ready(function(){
-			{% block jquery %}{% endblock jquery %}
-		})
-	</script>
+	</div>
+	<!-- End of Page Wrapper -->
 
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
 
+	<!-- Logout Modal-->
+	{% include 'base/logout_model.html' %}
+
+	{% include 'base/js.html' %}
 
 </body>
 

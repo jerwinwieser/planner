@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<head>
+	
+	<title>{% block title %}{% endblock title %}</title>
+
+	{% include 'registrations/datatable.html' %}
+
+
+</head>
+
+<body>
+
+
+	{% include 'registrations/messages.html' %}
+
+
+	{% include 'registrations/navigation.html' %}
+
+
+	{% block content %}{% endblock content %}
+
+
+	{% include 'registrations/js.html' %}
+
+
+
+
+	<script>
+		$(document).ready(function(){
+			{% block jquery %}{% endblock jquery %}
+		})
+	</script>
+
+
+
+</body>
+
+</html>
