@@ -1,0 +1,15 @@
+{% extends 'registrations/base.html' %}
+
+{% block content %}
+
+<h2>Person Delete:</h2>
+{% if form %}
+	<form method="post">
+		{% csrf_token %}
+	    <p>Are you sure you want to delete the item?</p>
+	    <input class="btn btn-primary" type="submit" value="Confirm"/>
+	    <button onclick="window.history.back();" class="btn btn-default" type="button">Cancel</button>
+	</form>
+{% endif %}
+
+{% endblock content %}

@@ -4,27 +4,40 @@
 
 {% block content %}
 
-<div class="content-section">
-<form method="POST">
-	{% csrf_token %}
-	<fieldset class="form-group">
-		<legend class="border-bottomm mb-4">Log In
-			{{ form|crispy }}
-		</legend>
-	</fieldset>
-	<div class="form-group">
-		<button class="btn btn-outline-info" type="submit">Login</button>
+<div class="row">
+	<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+	<div class="col-lg-6">
+		<div class="p-5">
+			<div class="text-center">
+				<h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+			</div>
+			<form class="user" method="POST">
+
+				{% csrf_token %}
+
+				<fieldset class="form-group">
+					<legend class="border-bottomm mb-4">Log In
+
+						{{ form|crispy }}
+					
+					</legend>
+				</fieldset>
+	
+				<div class="form-group">
+					<button class="btn btn-outline-info" type="submit">Login</button>
+				</div>
+	
+			</form>
+
+			<hr>
+			<div class="text-center">
+				<a class="small" href="{% url 'password_reset' %}">Forgot Password?</a>
+			</div>
+			<div class="text-center">
+				<a class="small" href="{% url 'register' %}">Create an Account!</a>
+			</div>
+		</div>
 	</div>
-</form>
-
-<div class="border-top pt-3">
-	<small class="text-muted">
-		Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up</a>
-	</small>
 </div>
-
-</div>
-
-<a href="{% url 'password_reset' %}">Reset password</a>
 
 {% endblock content %}

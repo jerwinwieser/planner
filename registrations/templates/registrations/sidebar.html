@@ -37,6 +37,28 @@
 
 	<!-- Heading -->
 	<div class="sidebar-heading">
+		Custom Pages
+	</div>
+
+	<!-- Nav Item - Cards -->
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'cards' %}">
+			<span>Cards</span>
+		</a>
+	</li>
+
+	<!-- Nav Item - Cards -->
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'pagex' %}">
+			<span>Page X</span>
+		</a>
+	</li>
+
+	<!-- Divider -->
+	<hr class="sidebar-divider d-none d-md-block">
+
+	<!-- Heading -->
+	<div class="sidebar-heading">
 		Pages
 	</div>
 
@@ -53,6 +75,13 @@
 				<a class="collapse-item" href="{% url 'password_reset' %}">Forgot Password</a>
 			</div>
 		</div>
+	</li>
+
+	<!-- Nav Item - Cards -->
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'admin:index' %}">
+			<span>Admin</span>
+		</a>
 	</li>
 
 	<!-- Divider -->

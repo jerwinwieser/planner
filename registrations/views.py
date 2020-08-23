@@ -19,7 +19,6 @@ from .serializers import PersonSerializer
 from datetime import datetime, date
 import pandas
 
-
 @login_required(login_url='login')
 def index(request):
 	current_user = request.user
@@ -43,6 +42,68 @@ def tables(request):
 	persons = Person.objects.all()
 	persons_by_user = Person.objects.filter(created_by_id=current_user)
 	return render(request, 'registrations/tables.html', locals())
+
+@login_required(login_url='login')
+def cards(request):
+	current_user = request.user
+	users = User.objects.all()
+	persons = Person.objects.all()
+	persons_by_user = Person.objects.filter(created_by_id=current_user)
+	return render(request, 'registrations/cards.html', locals())
+
+@login_required(login_url='login')
+def pagex(request):
+	current_user = request.user
+	users = User.objects.all()
+	persons = Person.objects.all()
+	persons_by_user = Person.objects.filter(created_by_id=current_user)
+	return render(request, 'registrations/pagex.html', locals())
+
+@login_required(login_url='login')
+def form_delete(request, person_id):
+	current_user = request.user
+	if request.method == 'POST':
+		person = Person.objects.get(pk=person_id)
+		form = PersonForm(request.POST or None, instance=person)
+
+		person.delete()
+		messages.success(request, ('Person been been deleted!'))
+		return redirect('pagex')
+
+	else:
+		person = Person.objects.get(pk=person_id)
+		form = PersonForm(instance=person)
+		return render(request, 'registrations/form_delete.html', {'form': form})
+
+@login_required(login_url='login')
+def form_edit(request, person_id):
+	current_user = request.user
+	if request.method == 'POST':
+		person = Person.objects.get(pk=person_id)
+		form = PersonForm(request.POST or None, instance=person)
+
+		if form.is_valid():
+			form.save(user=current_user)
+			messages.success(request, ('Person has been edited!'))
+			return redirect('index')
+
+	else:
+		person = Person.objects.get(pk=person_id)
+		form = PersonForm(instance=person)
+		return render(request, 'registrations/form_edit.html', {'form': form})
+
+@login_required(login_url='login')
+def form_render(request):
+	current_user = request.user
+	if request.method == 'POST':
+		form = PersonForm(request.POST)
+		if form.is_valid():
+			form.save(user=current_user)
+
+	form = PersonForm()
+	return render(request, 'registrations/form.html', {'form': form})
+
+
 
 # @api_view(['GET'])
 # def data_rest_api(request):
@@ -74,51 +135,6 @@ def tables(request):
 
 # def chart_render(request, *args, **kwargs):
 # 	return render(request, 'registrations/chart.html')
-
-
-# @login_required(login_url='login')
-# def form_delete(request, person_id):
-# 	current_user = request.user
-# 	if request.method == 'POST':
-# 		person = Person.objects.get(pk=person_id)
-# 		form = PersonForm(request.POST or None, instance=person)
-
-# 		person.delete()
-# 		messages.success(request, ('Person been been deleted!'))
-# 		return redirect('index')
-
-# 	else:
-# 		person = Person.objects.get(pk=person_id)
-# 		form = PersonForm(instance=person)
-# 		return render(request, 'registrations/form_delete.html', {'form': form})
-
-# @login_required(login_url='login')
-# def form_edit(request, person_id):
-# 	current_user = request.user
-# 	if request.method == 'POST':
-# 		person = Person.objects.get(pk=person_id)
-# 		form = PersonForm(request.POST or None, instance=person)
-
-# 		if form.is_valid():
-# 			form.save(user=current_user)
-# 			messages.success(request, ('Person has been edited!'))
-# 			return redirect('index')
-
-# 	else:
-# 		person = Person.objects.get(pk=person_id)
-# 		form = PersonForm(instance=person)
-# 		return render(request, 'registrations/form_edit.html', {'form': form})
-
-# @login_required(login_url='login')
-# def form_render(request):
-# 	current_user = request.user
-# 	if request.method == 'POST':
-# 		form = PersonForm(request.POST)
-# 		if form.is_valid():
-# 			form.save(user=current_user)
-
-# 	form = PersonForm()
-# 	return render(request, 'registrations/form.html', {'form': form})
 
 
 
