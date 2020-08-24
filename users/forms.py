@@ -47,21 +47,6 @@ class UserUpdateForm(forms.ModelForm):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # class UpdateProfile(forms.ModelForm):
 
 # 	first_name = forms.CharField(required=True, max_length=255)
