@@ -11,22 +11,13 @@
 			<div class="text-center">
 				<h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
 			</div>
-			<form class="user" method="POST">
 
+			<form method="POST">
 				{% csrf_token %}
-
-				<fieldset class="form-group">
-					<legend class="border-bottomm mb-4">Log In
-
-						{{ form|crispy }}
-					
-					</legend>
-				</fieldset>
-	
+				{{ form|crispy }}
 				<div class="form-group">
-					<button class="btn btn-outline-info" type="submit">Login</button>
+					<button class="btn btn-primary btn-user btn-block" type="submit">Login</button>
 				</div>
-	
 			</form>
 
 			<hr>
