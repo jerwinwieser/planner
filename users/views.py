@@ -2,12 +2,31 @@ from django.shortcuts import render, redirect
 
 from django.contrib import messages
 
-from .forms import UserRegisterForm, UserUpdateForm
+from .forms import UserRegisterForm, UserUpdateForm, JobForm
 
 from django.contrib.auth.decorators import login_required, permission_required
 
 from django.contrib.auth.models import User, Permission
 
+
+def jobform(request):
+	form = JobForm(request.POST)
+	if form.is_valid():
+		form.save()
+	else:
+		form = JobForm()
+		return render(request, 'users/jobform.html', {'form': form})
+
+def register_crispy(request):
+	form = UserRegisterForm(request.POST)
+	if form.is_valid():
+		form.save()
+		username = form.cleaned_data.get('username')
+		messages.success(request, f'Your account has been created; you are now able to log in, {username}!')
+		return redirect('login')
+	else:
+		form = UserRegisterForm()
+		return render(request, 'users/register_crispy.html', {'form': form})
 
 def register(request):
 	form = UserRegisterForm(request.POST)
