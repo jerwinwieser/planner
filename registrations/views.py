@@ -104,38 +104,38 @@ def form_render(request):
 	return render(request, 'registrations/form.html', {'form': form})
 
 
+@api_view(['GET'])
+def data_rest_api(request):
+	persons_by_user = Person.objects.filter(created_by_id=request.user)
+	persons_total = Person.objects.all()
+	serializer = PersonSerializer(persons_by_user, many=True)
 
-# @api_view(['GET'])
-# def data_rest_api(request):
-# 	persons_by_user = Person.objects.filter(created_by_id=request.user)
-# 	persons_total = Person.objects.all()
-# 	serializer = PersonSerializer(persons_by_user, many=True)
+	persons_by_user_names = [item for item in persons_by_user.values_list('name', flat=True)]
+	persons_by_user_age = [item for item in persons_by_user.values_list('person_age', flat=True)]
 
-# 	persons_by_user_names = [item for item in persons_by_user.values_list('name', flat=True)]
-# 	persons_by_user_age = [item for item in persons_by_user.values_list('person_age', flat=True)]
+	persons_total_names = [item for item in persons_total.values_list('name', flat=True)]
+	persons_total_age = [item for item in persons_total.values_list('person_age', flat=True)]
 
-# 	persons_total_names = [item for item in persons_total.values_list('name', flat=True)]
-# 	persons_total_age = [item for item in persons_total.values_list('person_age', flat=True)]
+	persons_total_names = [item for item in persons_total.values_list('name', flat=True)]
 
-# 	persons_total_names = [item for item in persons_total.values_list('name', flat=True)]
+	data = {
+		'persons_by_user_names': persons_by_user_names,
+		'persons_by_user_age': persons_by_user_age,
+		'persons_total_names': persons_total_names,
+		'persons_total_age': persons_total_age,
+	}
+	return Response(data)
 
-# 	data = {
-# 		'persons_by_user_names': persons_by_user_names,
-# 		'persons_by_user_age': persons_by_user_age,
-# 		'persons_total_names': persons_total_names,
-# 		'persons_total_age': persons_total_age,
-# 	}
-# 	return Response(data)
 
-# @api_view(['GET'])
-# def data_rest_api_serial(request):
-# 	persons_total = Person.objects.all()
-# 	serializer = PersonSerializer(persons_total, many=True)
-# 	return Response(serializer.data)
+def chart_render(request, *args, **kwargs):
+	return render(request, 'registrations/chart.html')
 
-# def chart_render(request, *args, **kwargs):
-# 	return render(request, 'registrations/chart.html')
 
+@api_view(['GET'])
+def data_rest_api_serial(request):
+	persons_total = Person.objects.all()
+	serializer = PersonSerializer(persons_total, many=True)
+	return Response(serializer.data)
 
 
 

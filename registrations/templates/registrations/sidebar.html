@@ -32,25 +32,10 @@
 		</a>
 	</li>
 
-	<!-- Divider -->
-	<hr class="sidebar-divider d-none d-md-block">
-
-	<!-- Heading -->
-	<div class="sidebar-heading">
-		Custom Pages
-	</div>
-
 	<!-- Nav Item - Cards -->
 	<li class="nav-item">
 		<a class="nav-link" href="{% url 'cards' %}">
 			<span>Cards</span>
-		</a>
-	</li>
-
-	<!-- Nav Item - Cards -->
-	<li class="nav-item">
-		<a class="nav-link" href="{% url 'pagex' %}">
-			<span>Page X</span>
 		</a>
 	</li>
 
@@ -73,6 +58,23 @@
 				<a class="collapse-item" href="{% url 'login' %}">Login</a>
 				<a class="collapse-item" href="{% url 'register' %}">Register</a>
 				<a class="collapse-item" href="{% url 'password_reset' %}">Forgot Password</a>
+			</div>
+		</div>
+	</li>
+
+	<!-- Nav Item - Custom Pages Collapse Menu -->
+	<li class="nav-item">
+		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomPages" aria-expanded="true" aria-controls="collapseCustomPages">
+			<span>Custom Pages</span>
+		</a>
+		<div id="collapseCustomPages" class="collapse" aria-labelledby="headingCustomPages" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<h6 class="collapse-header">Custom Pages:</h6>
+				<a class="collapse-item" href="{% url 'data_rest_api' %}">Rest Api</a>
+				<a class="collapse-item" href="{% url 'data_rest_api_serial' %}">Serializer</a>
+				<a class="collapse-item" href="{% url 'chart_render' %}">Chart</a>
+				<a class="collapse-item" href="{% url 'form_render' %}">Form</a>
+				<a class="collapse-item" href="{% url 'pagex' %}">Page X</a>
 			</div>
 		</div>
 	</li>
