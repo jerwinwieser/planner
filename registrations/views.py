@@ -52,14 +52,6 @@ def cards(request):
 	return render(request, 'registrations/cards.html', locals())
 
 @login_required(login_url='login')
-def pagex(request):
-	current_user = request.user
-	users = User.objects.all()
-	persons = Person.objects.all()
-	persons_by_user = Person.objects.filter(created_by_id=current_user)
-	return render(request, 'registrations/pagex.html', locals())
-
-@login_required(login_url='login')
 def form_delete(request, person_id):
 	current_user = request.user
 	if request.method == 'POST':
@@ -103,7 +95,6 @@ def form_render(request):
 	form = PersonForm()
 	return render(request, 'registrations/form.html', {'form': form})
 
-
 @api_view(['GET'])
 def data_rest_api(request):
 	persons_by_user = Person.objects.filter(created_by_id=request.user)
@@ -125,11 +116,6 @@ def data_rest_api(request):
 		'persons_total_age': persons_total_age,
 	}
 	return Response(data)
-
-
-def chart_render(request, *args, **kwargs):
-	return render(request, 'registrations/chart.html')
-
 
 @api_view(['GET'])
 def data_rest_api_serial(request):

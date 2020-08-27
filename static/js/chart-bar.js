@@ -34,10 +34,8 @@ $.ajax({
   success: function(data){
     /*x = data.persons_by_user_names
     y = data.persons_by_user_age*/
-    /*x = data.persons_total_names
-    y = data.persons_total_age*/
-    x = ["Michael", "Roger"]
-    y = [35, 40]
+    x = data.persons_total_names
+    y = data.persons_total_age
     var ctx = document.getElementById("myBarChart2");
     var myBarChart = new Chart(ctx, {
       type: 'bar',
