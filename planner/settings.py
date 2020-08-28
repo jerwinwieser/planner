@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'registrations.apps.RegistrationsConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
+    'bootstrap_modal_forms',
     'rest_framework',
     'schedule',
     'djangobower',

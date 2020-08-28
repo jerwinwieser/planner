@@ -4,10 +4,29 @@
 
 {% block content %}
 
-<form method="post">
+<!-- <form method="post">
 	{% csrf_token %}
 	{{ form|crispy }}
 	<button type="submit">Submit</button>
-</form>
+</form> -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content"></div>
+	</div>
+</div>
+
+<!-- Create book button -->
+<button id="create-book" class="btn btn-primary" type="button" name="button">Create book</button>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $("#create-book").modalForm({
+        formURL: "{% url 'create_book' %}"
+    });
+
+});
+</script>
 
 {% endblock content %}

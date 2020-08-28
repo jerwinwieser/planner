@@ -5,6 +5,12 @@ from .models import Person
 
 from django.contrib.auth.models import User
 
+from .models import Book
+
+class BookModelForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'price']
 
 
 class PersonForm(forms.ModelForm):
@@ -20,4 +26,5 @@ class PersonForm(forms.ModelForm):
 		obj.created_by = user
 		obj.save()
 		return obj
+
 

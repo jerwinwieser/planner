@@ -11,13 +11,22 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import Person
-from .forms import PersonForm
+from .models import Person, Book
+from .forms import PersonForm, BookModelForm
 from .serializers import PersonSerializer
 
 
 from datetime import datetime, date
 import pandas
+
+from django.urls import reverse_lazy
+from bootstrap_modal_forms.generic import BSModalCreateView
+
+class BookCreateView(BSModalCreateView):
+    template_name = 'registrations/create_book.html'
+    form_class = BookModelForm
+    success_message = 'Success: Book was created.'
+    success_url = reverse_lazy('form')
 
 @login_required(login_url='login')
 def index(request):
