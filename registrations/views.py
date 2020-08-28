@@ -21,33 +21,25 @@ import pandas
 from django.urls import reverse_lazy
 from bootstrap_modal_forms.generic import BSModalCreateView
 
+class PersonAddView(BSModalCreateView):
+	template_name = 'registrations/add_person.html'
+	form_class = PersonForm
+	success_message = 'Success: Person was added.'
+	success_url = reverse_lazy('form_render')
+
+	def form_valid(self, form):
+		print(self)
+		print(self.request)
+		print(self.request.user)
+		print(self.request.user.id)
+		form.instance.created_by_id = self.request.user.id
+		return super(PersonAddView, self).form_valid(form)
+
 class BookCreateView(BSModalCreateView):
     template_name = 'registrations/create_book.html'
     form_class = BookModelForm
     success_message = 'Success: Book was created.'
-    success_url = reverse_lazy('form')
-
-def book_create(request):
-	data = dict()
-	if request.method == 'POST':
-		form = BookForm(request.POST)
-		if form.is_valid():
-			form.save()
-			data['form_is_valid'] = True
-		else:
-			data['form_is_valid'] = False	
-	else:
-		form = BookForm()
-	
-	context = {
-		'form': form
-		}
-
-	data['html_form'] = render_to_string('book_create.html', context, request=request)
-	return JsonResponse(data)
-
-
-
+    success_url = reverse_lazy('form_render')
 
 @login_required(login_url='login')
 def index(request):

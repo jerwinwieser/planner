@@ -6,23 +6,14 @@ from .models import Person, Book
 from bootstrap_modal_forms.forms import BSModalModelForm
 
 class BookModelForm(BSModalModelForm):
+
     class Meta:
         model = Book
-        fields = ['title', 'author', 'price']
+        fields = ['title', 'publication_date', 'author', 'price', 'pages', 'book_type']
 
 
-class PersonForm(forms.ModelForm):
-
+class PersonForm(BSModalModelForm):
 
 	class Meta:
 		model = Person
 		fields = ('name', 'nationality', 'person_age', 'duration' ,'interaction', 'interaction', 'looks', 'close', 'reply', 'lay', 'comments')
-
-
-	def save(self, user, commit=True):
-		obj = super(PersonForm, self).save(commit=False)
-		obj.created_by = user
-		obj.save()
-		return obj
-
-
