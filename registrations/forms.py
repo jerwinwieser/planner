@@ -1,13 +1,11 @@
-
 from django import forms
-
-from .models import Person
-
 from django.contrib.auth.models import User
+from .models import Person, Book
 
-from .models import Book
 
-class BookModelForm(forms.ModelForm):
+from bootstrap_modal_forms.forms import BSModalModelForm
+
+class BookModelForm(BSModalModelForm):
     class Meta:
         model = Book
         fields = ['title', 'author', 'price']

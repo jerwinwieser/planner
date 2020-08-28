@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, JsonResponse, Http404
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User, Permission
 from django.core.files.storage import FileSystemStorage
 from django.contrib import messages
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -27,6 +26,28 @@ class BookCreateView(BSModalCreateView):
     form_class = BookModelForm
     success_message = 'Success: Book was created.'
     success_url = reverse_lazy('form')
+
+def book_create(request):
+	data = dict()
+	if request.method == 'POST':
+		form = BookForm(request.POST)
+		if form.is_valid():
+			form.save()
+			data['form_is_valid'] = True
+		else:
+			data['form_is_valid'] = False	
+	else:
+		form = BookForm()
+	
+	context = {
+		'form': form
+		}
+
+	data['html_form'] = render_to_string('book_create.html', context, request=request)
+	return JsonResponse(data)
+
+
+
 
 @login_required(login_url='login')
 def index(request):
