@@ -19,7 +19,15 @@ from datetime import datetime, date
 import pandas
 
 from django.urls import reverse_lazy
-from bootstrap_modal_forms.generic import BSModalCreateView
+
+from bootstrap_modal_forms.generic import (
+	BSModalLoginView,
+	BSModalFormView,
+	BSModalCreateView,
+	BSModalUpdateView,
+	BSModalReadView,
+	BSModalDeleteView
+	)
 
 class PersonAddView(BSModalCreateView):
 	template_name = 'registrations/add_person.html'
@@ -28,17 +36,39 @@ class PersonAddView(BSModalCreateView):
 	success_url = reverse_lazy('form_render')
 
 	def form_valid(self, form):
-		print(self)
-		print(self.request)
-		print(self.request.user)
-		print(self.request.user.id)
 		form.instance.created_by_id = self.request.user.id
 		return super(PersonAddView, self).form_valid(form)
+
+class PersonUpdateView(BSModalUpdateView):
+    model = Person
+    template_name = 'registrations/update_person.html'
+    form_class = PersonForm
+    success_message = 'Success: Person was updated.'
+    success_url = reverse_lazy('tables')
+
+class PersonDeleteView(BSModalDeleteView):
+    model = Person
+    template_name = 'registrations/delete_person.html'
+    success_message = 'Success: Person was deleted.'
+    success_url = reverse_lazy('tables')
 
 class BookCreateView(BSModalCreateView):
     template_name = 'registrations/create_book.html'
     form_class = BookModelForm
     success_message = 'Success: Book was created.'
+    success_url = reverse_lazy('form_render')
+
+class BookUpdateView(BSModalUpdateView):
+    model = Book
+    template_name = 'registrations/update_book.html'
+    form_class = BookModelForm
+    success_message = 'Success: Book was updated.'
+    success_url = reverse_lazy('form_render')
+
+class BookDeleteView(BSModalDeleteView):
+    model = Book
+    template_name = 'registrations/delete_book.html'
+    success_message = 'Success: Book was deleted.'
     success_url = reverse_lazy('form_render')
 
 @login_required(login_url='login')

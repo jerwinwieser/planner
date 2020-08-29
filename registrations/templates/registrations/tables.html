@@ -2,6 +2,12 @@
 
 {% block content %}
 
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content"></div>
+	</div>
+</div>
+
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Tables</h1>
 <p class="mb-4">DataTables example</p>
@@ -27,6 +33,7 @@
 						<th>Lay</th>
 						<th>Created at</th>
 						<th>Created by</th>
+						<th>Read / Update / Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -43,6 +50,10 @@
 						<td>{{ person.lay }}</td>
 						<td>{{ person.created_at }}</td>
 						<td>{{ person.created_by }}</td>
+						<td>
+							<a href="{% url 'delete_person' person.id %}">Delete</a> |
+							<a href="{% url 'update_person' person.id %}">Edit</a>
+						</td>
 					</tr>
 					{% endfor persons %}
 				</tbody>
