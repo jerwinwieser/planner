@@ -1,5 +1,7 @@
 {% extends 'registrations/base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modal">
@@ -11,6 +13,7 @@
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800">Tables</h1>
 <p class="mb-4">DataTables example</p>
+
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -33,6 +36,7 @@
 						<th>Lay</th>
 						<th>Created at</th>
 						<th>Created by</th>
+						<th>Id</th>
 						<th>Read / Update / Delete</th>
 					</tr>
 				</thead>
@@ -50,9 +54,18 @@
 						<td>{{ person.lay }}</td>
 						<td>{{ person.created_at }}</td>
 						<td>{{ person.created_by }}</td>
+						<td>{{ person.id }}</td>
 						<td>
-							<a href="{% url 'delete_person' person.id %}">Delete</a> |
+			
+							<a href="{% url 'delete_person' person.id %}">Delete</a>
+
 							<a href="{% url 'update_person' person.id %}">Edit</a>
+
+							<!-- Delete book buttons -->
+							<!-- <button type="button" class="bs-modal delete-person btn btn-sm btn-danger" data-form-url="{% url 'delete_person' person.id %}">
+								<span class="fa fa-trash"></span>
+							</button> -->
+
 						</td>
 					</tr>
 					{% endfor persons %}
@@ -63,4 +76,3 @@
 </div>
 
 {% endblock content %}
-

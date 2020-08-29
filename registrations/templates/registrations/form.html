@@ -16,21 +16,5 @@
 <!-- Create Person button -->
 <button id="create-person" class="btn btn-primary" type="button" name="button">Add person</button>
 
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#create-book").modalForm({
-			formURL: "{% url 'create_book' %}"
-		});
-	});
-</script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$("#create-person").modalForm({
-			formURL: "{% url 'add_person' %}"
-		});
-	});
-</script>
-
 {% endblock content %}
+

@@ -1,0 +1,16 @@
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#create-book").modalForm({
+			formURL: "{% url 'create_book' %}"
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#create-person").modalForm({
+			formURL: "{% url 'add_person' %}"
+		});
+	});
+</script>
+
