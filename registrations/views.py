@@ -9,11 +9,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.views import generic
 
 from .models import Person, Book
 from .forms import PersonForm, BookModelForm
 from .serializers import PersonSerializer
-
 
 from datetime import datetime, date
 import pandas
@@ -38,14 +38,14 @@ def tables(request):
 	return render(request, 'registrations/tables.html', locals())
 
 class PersonCreateView(BSModalCreateView):
-	template_name = 'registrations/add_person.html'
+	template_name = 'registrations/create_person.html'
 	form_class = PersonForm
 	success_message = 'Success: Person was added.'
-	success_url = reverse_lazy('form_render')
+	success_url = reverse_lazy('tables')
 
 	def form_valid(self, form):
 		form.instance.created_by_id = self.request.user.id
-		return super(PersonAddView, self).form_valid(form)
+		return super(PersonCreateView, self).form_valid(form)
 
 class PersonUpdateView(BSModalUpdateView):
     model = Person

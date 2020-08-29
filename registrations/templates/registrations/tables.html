@@ -3,8 +3,130 @@
 
 {% block content %}
 
+{% include "registrations/_modal.html" %}
 
+<button id="create-person" class="btn btn-primary" type="button" name="button">
+	<span class="fa fa-plus mr-2"></span>Create person
+</button>
 
+{% for person in persons %}
 
+<ul>
+	<li>
+		{{ person.name }} | {{ person.created_by }} | {{ person.id }}
+	</li>
+	<li>
+		<!-- Delete person buttons -->
+		<button type="button" class="bs-modal delete-person btn btn-sm btn-danger" data-form-url="{% url 'delete_person' person.pk %}">
+			<span class="fa fa-trash"></span>
+		</button>
+	</li>
+</ul>
+
+{% endfor %}
 
 {% endblock content %}
+
+
+{% block extrascripts %}
+
+<script type="text/javascript">
+	$(function () {
+
+		// Create person button opens modal with id="create-modal"
+		$("#create-person").modalForm({
+			formURL: "{% url 'create_person' %}",
+			modalID: "#create-modal"
+		});
+
+		// Read and Delete person buttons open modal with id="modal"
+		// The formURL is retrieved from the data of the element
+		$(".bs-modal").each(function () {
+			$(this).modalForm({formURL: $(this).data("form-url")});
+		});
+		
+		var asyncSuccessMessage = [
+		"<div ",
+		"style='position:fixed;top:0;z-index:10000;width:100%;border-radius:0;' ",
+		"class='alert alert-icon alert-success alert-dismissible fade show mb-0' role='alert'>",
+		"Success: Person was updated.",
+		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>",
+		"<span aria-hidden='true'>&times;</span>",
+		"</button>",
+		"</div>",
+		"<script>",
+		"$('.alert').fadeTo(2000, 500).slideUp(500, function () {$('.alert').slideUp(500).remove();});",
+		"<\/script>"
+		].join("");
+	});
+</script>
+
+{% endblock extrascripts %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <script type="text/javascript">
+	$(function () {
+
+		// Create person button opens modal with id="create-modal"
+		$("#create-person").modalForm({
+			formURL: "{% url 'create_person' %}",
+			modalID: "#create-modal"
+		});
+
+		var asyncSuccessMessage = [
+		"<div ",
+		"style='position:fixed;top:0;z-index:10000;width:100%;border-radius:0;' ",
+		"class='alert alert-icon alert-success alert-dismissible fade show mb-0' role='alert'>",
+		"Success: Person was updated.",
+		"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>",
+		"<span aria-hidden='true'>&times;</span>",
+		"</button>",
+		"</div>",
+		"<script>",
+		"$('.alert').fadeTo(2000, 500).slideUp(500, function () {$('.alert').slideUp(500).remove();});",
+		"<\/script>"
+		].join("");
+
+		function updatePersonModalForm() {
+			$(".update-person").each(function () {
+				$(this).modalForm({
+					formURL: $(this).data("form-url"),
+					asyncUpdate: true,
+					asyncSettings: {
+						closeOnSubmit: false,
+						successMessage: asyncSuccessMessage,
+						dataUrl: "persons/",
+						dataElementId: "#persons-table",
+						dataKey: "table",
+						addModalFormFunction: updatePersonModalForm
+					}
+				});
+			});
+		}
+		updatePersonModalForm();
+
+		// Read and Delete person buttons open modal with id="modal"
+		// The formURL is retrieved from the data of the element
+		$(".bs-modal").each(function () {
+			$(this).modalForm({formURL: $(this).data("form-url")});
+		});
+
+		// Hide message
+		$(".alert").fadeTo(2000, 500).slideUp(500, function () {
+			$(".alert").slideUp(500);
+		});
+	});
+</script> -->
+
