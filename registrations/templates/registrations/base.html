@@ -5,7 +5,7 @@
 
 <head>
 
-{% include 'registrations/head.html' %}
+{% include 'registrations/_head.html' %}
 
 </head>
 
@@ -15,10 +15,18 @@
 	<div id="wrapper">
 
 		<!-- Javascript code -->
-		{% include 'registrations/jquery.html' %}
+		<!-- Bootstrap core JavaScript-->
+		<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+		<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+		<!-- JWR django-bootstrap-modal-forms -->
+		<script src="{% static 'js/jquery.bootstrap.modal.forms.js' %}"></script>
 		
 		<!-- Sidebar -->
-		{% include 'registrations/sidebar.html' %}
+		{% include 'registrations/_sidebar.html' %}
 		<!-- End of Sidebar -->
 
 		<!-- Content Wrapper -->
@@ -28,7 +36,7 @@
 			<div id="content">
 
 				<!-- Topbar -->
-				{% include 'registrations/topbar.html' %}
+				{% include 'registrations/_topbar.html' %}
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
@@ -43,11 +51,32 @@
 			<!-- End of Main Content -->
 
 			<!-- Footer -->
-			{% include 'registrations/footer.html' %}
+			{% include 'registrations/_footer.html' %}
 			<!-- End of Footer -->
 
 			<!-- Javascript code -->
-			{% include 'registrations/js.html' %}
+			<!-- Custom scripts for all pages-->
+			<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+			<!-- Page level plugins -->
+			<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+			<!-- Page level custom scripts -->
+			<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+			<script src="{% static 'js/demo/chart-bar-demo.js' %}"></script>
+			<script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+
+			<!-- Page level plugins -->
+			<script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
+			<script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+			<!-- Page level custom scripts -->
+			<script src="{% static 'js/demo/datatables-demo.js' %}"></script>
+
+			<!-- JWR Charts -->
+			<script src="{% static 'js/chart-area.js' %}"></script>
+			<script src="{% static 'js/chart-bar.js' %}"></script>
+			<script src="{% static 'js/chart-pie.js' %}"></script>
 
 		</div>
 		<!-- End of Content Wrapper -->

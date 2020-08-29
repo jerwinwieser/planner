@@ -29,16 +29,9 @@ from bootstrap_modal_forms.generic import (
 	BSModalDeleteView
 	)
 
-@login_required(login_url='login')
-def tables(request):
-	current_user = request.user
-	users = User.objects.all()
-	persons = Person.objects.all()
-	persons_by_user = Person.objects.filter(created_by_id=current_user)
-	return render(request, 'registrations/tables.html', locals())
 
 class PersonCreateView(BSModalCreateView):
-	template_name = 'registrations/create_person.html'
+	template_name = 'registrations/person_create.html'
 	form_class = PersonForm
 	success_message = 'Success: Person was added.'
 	success_url = reverse_lazy('tables')
@@ -47,18 +40,34 @@ class PersonCreateView(BSModalCreateView):
 		form.instance.created_by_id = self.request.user.id
 		return super(PersonCreateView, self).form_valid(form)
 
+
+class PersonReadView(BSModalReadView):
+    model = Person
+    template_name = 'registrations/person_read.html'
+
+
 class PersonUpdateView(BSModalUpdateView):
     model = Person
-    template_name = 'registrations/update_person.html'
+    template_name = 'registrations/person_update.html'
     form_class = PersonForm
     success_message = 'Success: Person was updated.'
     success_url = reverse_lazy('tables')
 
+
 class PersonDeleteView(BSModalDeleteView):
     model = Person
-    template_name = 'registrations/delete_person.html'
+    template_name = 'registrations/person_delete.html'
     success_message = 'Success: Person was deleted.'
     success_url = reverse_lazy('tables')
+
+
+@login_required(login_url='login')
+def tables(request):
+	current_user = request.user
+	users = User.objects.all()
+	persons = Person.objects.all()
+	persons_by_user = Person.objects.filter(created_by_id=current_user)
+	return render(request, 'registrations/tables.html', locals())
 
 @login_required(login_url='login')
 def index(request):
@@ -75,17 +84,6 @@ def charts(request):
 	persons = Person.objects.all()
 	persons_by_user = Person.objects.filter(created_by_id=current_user)
 	return render(request, 'registrations/charts.html', locals())
-
-@login_required(login_url='login')
-def form_render(request):
-	current_user = request.user
-	if request.method == 'POST':
-		form = PersonForm(request.POST)
-		if form.is_valid():
-			form.save(user=current_user)
-
-	form = PersonForm()
-	return render(request, 'registrations/form.html', {'form': form})
 
 @api_view(['GET'])
 def data_rest_api(request):

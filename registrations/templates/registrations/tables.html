@@ -5,7 +5,7 @@
 
 {% include "registrations/_modal.html" %}
 
-<button id="create-person" class="btn btn-primary" type="button" name="button">
+<button id="person-create" class="btn btn-primary" type="button" name="button">
 	<span class="fa fa-plus mr-2"></span>Create person
 </button>
 
@@ -16,10 +16,20 @@
 		{{ person.name }} | {{ person.created_by }} | {{ person.id }}
 	</li>
 	<li>
-		<!-- Delete person buttons -->
-		<button type="button" class="bs-modal delete-person btn btn-sm btn-danger" data-form-url="{% url 'delete_person' person.pk %}">
-			<span class="fa fa-trash"></span>
+
+        <!-- Read book buttons -->
+        <button type="button" class="bs-modal person-read btn btn-sm btn-primary" data-form-url="{% url 'person_read' person.pk %}">
+          <span class="fa fa-eye"></span>
+        </button>
+
+		<!-- Update book buttons -->
+		<button type="button" class="person-update btn btn-sm btn-primary" data-form-url="{% url 'person_update' person.pk %}">Edit
 		</button>
+
+		<!-- Delete person buttons -->
+		<button type="button" class="bs-modal person-delete btn btn-sm btn-danger" data-form-url="{% url 'person_delete' person.pk %}">Delete
+		</button>
+
 	</li>
 </ul>
 
@@ -34,15 +44,9 @@
 	$(function () {
 
 		// Create person button opens modal with id="create-modal"
-		$("#create-person").modalForm({
-			formURL: "{% url 'create_person' %}",
+		$("#person-create").modalForm({
+			formURL: "{% url 'person_create' %}",
 			modalID: "#create-modal"
-		});
-
-		// Read and Delete person buttons open modal with id="modal"
-		// The formURL is retrieved from the data of the element
-		$(".bs-modal").each(function () {
-			$(this).modalForm({formURL: $(this).data("form-url")});
 		});
 		
 		var asyncSuccessMessage = [
@@ -58,6 +62,35 @@
 		"$('.alert').fadeTo(2000, 500).slideUp(500, function () {$('.alert').slideUp(500).remove();});",
 		"<\/script>"
 		].join("");
+
+		function updatePersonModalForm() {
+			$(".person-update").each(function () {
+				$(this).modalForm({
+					formURL: $(this).data("form-url"),
+					asyncUpdate: true,
+					asyncSettings: {
+						closeOnSubmit: false,
+						successMessage: asyncSuccessMessage,
+						dataUrl: "tables/",
+						dataElementId: "#persons",
+						dataKey: "table",
+						addModalFormFunction: updatePersonModalForm
+					}
+				});
+			});
+		}
+		updatePersonModalForm();
+
+		// Read and Delete person buttons open modal with id="modal"
+		// The formURL is retrieved from the data of the element
+		$(".bs-modal").each(function () {
+			$(this).modalForm({formURL: $(this).data("form-url")});
+		});
+
+		// Hide message
+		$(".alert").fadeTo(2000, 500).slideUp(500, function () {
+			$(".alert").slideUp(500);
+		});
 	});
 </script>
 
