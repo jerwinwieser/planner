@@ -3,37 +3,54 @@
 
 {% block content %}
 
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800">Tables</h1>
+	<button id="person-create" class="btn btn-primary" type="button" name="button">
+		<span class="fa fa-plus mr-2"></span>Create person
+	</button>
+</div>
+
+
 {% include "registrations/_modal.html" %}
 
-<button id="person-create" class="btn btn-primary" type="button" name="button">
-	<span class="fa fa-plus mr-2"></span>Create person
-</button>
 
-{% for person in persons %}
+<div class="row">
 
-<ul>
-	<li>
-		{{ person.name }} | {{ person.created_by }} | {{ person.id }}
-	</li>
-	<li>
+	{% for person in persons %}
 
-        <!-- Read book buttons -->
-        <button type="button" class="bs-modal person-read btn btn-sm btn-primary" data-form-url="{% url 'person_read' person.pk %}">
-          <span class="fa fa-eye"></span>
-        </button>
+	<!-- Earnings (Monthly) Card Example -->
+	<div class="col-xl-3 col-md-6 mb-4">
+		<div class="card border-left-primary shadow h-100 py-2">
+			<div class="card-body">
+				<div class="row no-gutters align-items-center">
+					<div class="col mr-2">
+						<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ person.created_at }}</div>
+						<div class="h5 mb-0 font-weight-bold text-gray-800">{{ person.name }}</div>
+					</div>
+					<div class="col-auto">
+						<!-- Read book buttons -->
+				        <button type="button" class="bs-modal person-read btn btn-info btn-circle btn-sm" data-form-url="{% url 'person_read' person.pk %}"><i class="fas fa-info-circle"></i>
+				        </button>
+						<!-- Update book buttons -->
+				        <button type="button" class="bs-modal person-read btn btn-warning btn-circle btn-sm" data-form-url="{% url 'person_update' person.pk %}"><i class="fas fa-exclamation-triangle"></i>
+				        </button>
+						<!-- Delete book buttons -->
+				        <button type="button" class="bs-modal person-read btn btn-danger btn-circle btn-sm" data-form-url="{% url 'person_delete' person.pk %}"><i class="fas fa-trash"></i>
+				        </button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-		<!-- Update book buttons -->
-		<button type="button" class="person-update btn btn-sm btn-primary" data-form-url="{% url 'person_update' person.pk %}">Edit
-		</button>
+	{% endfor %}
 
-		<!-- Delete person buttons -->
-		<button type="button" class="bs-modal person-delete btn btn-sm btn-danger" data-form-url="{% url 'person_delete' person.pk %}">Delete
-		</button>
 
-	</li>
-</ul>
+</div>
 
-{% endfor %}
+
+
 
 {% endblock content %}
 
