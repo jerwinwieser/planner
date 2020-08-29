@@ -29,7 +29,15 @@ from bootstrap_modal_forms.generic import (
 	BSModalDeleteView
 	)
 
-class PersonAddView(BSModalCreateView):
+@login_required(login_url='login')
+def tables(request):
+	current_user = request.user
+	users = User.objects.all()
+	persons = Person.objects.all()
+	persons_by_user = Person.objects.filter(created_by_id=current_user)
+	return render(request, 'registrations/tables.html', locals())
+
+class PersonCreateView(BSModalCreateView):
 	template_name = 'registrations/add_person.html'
 	form_class = PersonForm
 	success_message = 'Success: Person was added.'
@@ -52,25 +60,6 @@ class PersonDeleteView(BSModalDeleteView):
     success_message = 'Success: Person was deleted.'
     success_url = reverse_lazy('tables')
 
-class BookCreateView(BSModalCreateView):
-    template_name = 'registrations/create_book.html'
-    form_class = BookModelForm
-    success_message = 'Success: Book was created.'
-    success_url = reverse_lazy('form_render')
-
-class BookUpdateView(BSModalUpdateView):
-    model = Book
-    template_name = 'registrations/update_book.html'
-    form_class = BookModelForm
-    success_message = 'Success: Book was updated.'
-    success_url = reverse_lazy('form_render')
-
-class BookDeleteView(BSModalDeleteView):
-    model = Book
-    template_name = 'registrations/delete_book.html'
-    success_message = 'Success: Book was deleted.'
-    success_url = reverse_lazy('form_render')
-
 @login_required(login_url='login')
 def index(request):
 	current_user = request.user
@@ -86,55 +75,6 @@ def charts(request):
 	persons = Person.objects.all()
 	persons_by_user = Person.objects.filter(created_by_id=current_user)
 	return render(request, 'registrations/charts.html', locals())
-
-@login_required(login_url='login')
-def tables(request):
-	current_user = request.user
-	users = User.objects.all()
-	persons = Person.objects.all()
-	persons_by_user = Person.objects.filter(created_by_id=current_user)
-	return render(request, 'registrations/tables.html', locals())
-
-@login_required(login_url='login')
-def cards(request):
-	current_user = request.user
-	users = User.objects.all()
-	persons = Person.objects.all()
-	persons_by_user = Person.objects.filter(created_by_id=current_user)
-	return render(request, 'registrations/cards.html', locals())
-
-@login_required(login_url='login')
-def form_delete(request, person_id):
-	current_user = request.user
-	if request.method == 'POST':
-		person = Person.objects.get(pk=person_id)
-		form = PersonForm(request.POST or None, instance=person)
-
-		person.delete()
-		messages.success(request, ('Person been been deleted!'))
-		return redirect('pagex')
-
-	else:
-		person = Person.objects.get(pk=person_id)
-		form = PersonForm(instance=person)
-		return render(request, 'registrations/form_delete.html', {'form': form})
-
-@login_required(login_url='login')
-def form_edit(request, person_id):
-	current_user = request.user
-	if request.method == 'POST':
-		person = Person.objects.get(pk=person_id)
-		form = PersonForm(request.POST or None, instance=person)
-
-		if form.is_valid():
-			form.save(user=current_user)
-			messages.success(request, ('Person has been edited!'))
-			return redirect('index')
-
-	else:
-		person = Person.objects.get(pk=person_id)
-		form = PersonForm(instance=person)
-		return render(request, 'registrations/form_edit.html', {'form': form})
 
 @login_required(login_url='login')
 def form_render(request):
@@ -175,5 +115,15 @@ def data_rest_api_serial(request):
 	serializer = PersonSerializer(persons_total, many=True)
 	return Response(serializer.data)
 
+
+
+
+# @login_required(login_url='login')
+# def cards(request):
+# 	current_user = request.user
+# 	users = User.objects.all()
+# 	persons = Person.objects.all()
+# 	persons_by_user = Person.objects.filter(created_by_id=current_user)
+# 	return render(request, 'registrations/cards.html', locals())
 
 
