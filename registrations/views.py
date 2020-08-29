@@ -77,6 +77,7 @@ def index(request):
 	persons_by_user = Person.objects.filter(created_by_id=current_user)
 	return render(request, 'registrations/index.html', locals())
 
+
 @login_required(login_url='login')
 def charts(request):
 	current_user = request.user
@@ -112,16 +113,4 @@ def data_rest_api_serial(request):
 	persons_total = Person.objects.all()
 	serializer = PersonSerializer(persons_total, many=True)
 	return Response(serializer.data)
-
-
-
-
-# @login_required(login_url='login')
-# def cards(request):
-# 	current_user = request.user
-# 	users = User.objects.all()
-# 	persons = Person.objects.all()
-# 	persons_by_user = Person.objects.filter(created_by_id=current_user)
-# 	return render(request, 'registrations/cards.html', locals())
-
 
